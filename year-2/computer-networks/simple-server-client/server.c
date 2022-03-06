@@ -18,17 +18,20 @@ void upper(char *str) {
     }
 }
 
-int main(int argc, char *argv[]) {
+char* parse_args(int argc, char *argv[]) {
     // Get port number from command line
     if (argc < 2) {
         printf("Please supply a port number!\n");
-        return 1;
+        exit(1);
     }
-    char* port = argv[1];
 
+    return argv[1];
+}
+
+struct addrinfo* load_addr_info(char *port) {
     // Set hints
     struct addrinfo hints;
-    memset(&hints, 0, sizeof hints);
+    memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
@@ -38,73 +41,104 @@ int main(int argc, char *argv[]) {
     int status = getaddrinfo(NULL, port, &hints, &info);
     if (status != 0) {
         printf("getaddrinfo error: %s\n", gai_strerror(status));
-        return 2;
+        exit(2);
     }
 
-    // Make socket
+    return info;
+}
+
+int make_socket(struct addrinfo *info) {
     int sockfd = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
-    if (sockfd == -1) {
+    if (sockfd < 0) {
         perror("socket creation error");
-        return 3;
+        exit(3);
     }
 
+    return sockfd;
+}
+
+void bind_socket(int sockfd, struct addrinfo *info) {
     // Clear address for use
     int yes = 1;
     if (setsockopt(sockfd, SOL_SOCKET, SO_REUSEADDR, &yes, sizeof yes) == -1) {
         perror("setsockopt error");
-        return 4;
+        exit(4);
     } 
 
     // Bind socket
     int bind_status = bind(sockfd, info->ai_addr, info->ai_addrlen);
-    freeaddrinfo(info);
     if (bind_status == -1) {
         perror("bind error");
-        return 5;
+        exit(5);
     }
+}
 
-    // Listen on socket
+void listen_on_socket(int sockfd) {
     int listen_status = listen(sockfd, BACKLOG);
     if (listen_status == -1) {
         perror("listen error");
-        return 6;
+        exit(6);
     }
-    printf("Listening on port %s, socket %d\n", port, sockfd);
+}
 
-    // Accept incoming connection
+int accept_connection(int sockfd) {
     struct sockaddr_storage client_addr;
     socklen_t addr_size = sizeof client_addr;
-    int new_fd = accept(sockfd, (struct sockaddr *)&client_addr, &addr_size);
-    if (new_fd == -1) {
+    int newfd = accept(sockfd, (struct sockaddr *)&client_addr, &addr_size);
+    if (newfd == -1) {
         perror("connection accept error");
-        return 7;
+        exit(7);
     }
-    printf("Accepted incoming connection on socket %d\n", new_fd);
+    return newfd;
+}
 
-    // Receive message
+char* receive_message(int sockfd) {
     char *buf = (char*) malloc(BUFFER_LEN);
-    int bytes_received = recv(new_fd, buf, BUFFER_LEN, 0);
+    int bytes_received = recv(sockfd, buf, BUFFER_LEN, 0);
     if (bytes_received == -1) {
         perror("message receive error");
-        return 8;
+        exit(8);
     }
-    printf("Received message: %s\n", buf);
+    return buf;
+}
 
-    // Convert received message to uppercase
-    upper(buf);
-
-    // Send reply
-    int bytes_sent = send(new_fd, buf, strlen(buf), 0);
+void send_message(int sockfd, char *reply) {
+    int bytes_sent = send(sockfd, reply, strlen(reply), 0);
     if (bytes_sent == -1) {
         perror("message send error");
-        return 9;
+        exit(9);
     }
-    printf("Sent reply: %s\n", buf);
+}
+
+int main(int argc, char *argv[]) {
+    char* port = parse_args(argc, argv);
+
+    struct addrinfo *info = load_addr_info(port);
+    
+    int sockfd = make_socket(info);
+
+    bind_socket(sockfd, info);
+
+    listen_on_socket(sockfd);
+    printf("Listening on port %s, socket %d\n", port, sockfd);
+
+    int newfd = accept_connection(sockfd);
+    printf("Accepted incoming connection on socket %d\n", newfd);
+
+    char *msg = receive_message(newfd);
+    printf("Received message: %s\n", msg);
+
+    // Convert received message to uppercase
+    upper(msg);
+
+    send_message(newfd, msg);
+    printf("Sent reply: %s\n", msg);
 
     // Clean up (optional)
-    free(buf);
+    freeaddrinfo(info);
+    free(msg);
     close(sockfd);
-    close(new_fd);
+    close(newfd);
 
     return 0;
 }

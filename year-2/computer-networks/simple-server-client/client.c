@@ -9,14 +9,17 @@
 #define BACKLOG 10
 #define BUFFER_LEN 1024
 
-int main(int argc, char *argv[]) {
+char* parse_args(int argc, char *argv[]) {
     // Get port number from command line
     if (argc < 2) {
         printf("Please supply a port number!\n");
-        return 1;
+        exit(1);
     }
-    char* port = argv[1];
 
+    return argv[1];
+}
+
+char* get_input() {
     // Ask for text input
     printf("Enter a message to send: ");
     char* msg = (char*) malloc(BUFFER_LEN);
@@ -26,10 +29,13 @@ int main(int argc, char *argv[]) {
         fgets(msg, BUFFER_LEN, stdin);
     }
     msg[strcspn(msg, "\n")] = 0;
+    return msg;
+}
 
+struct addrinfo* load_addr_info(char *port) {
     // Set hints
     struct addrinfo hints;
-    memset(&hints, 0, sizeof hints);
+    memset(&hints, 0, sizeof(hints));
     hints.ai_family = AF_UNSPEC;
     hints.ai_socktype = SOCK_STREAM;
     hints.ai_flags = AI_PASSIVE;
@@ -39,44 +45,70 @@ int main(int argc, char *argv[]) {
     int status = getaddrinfo(NULL, port, &hints, &info);
     if (status != 0) {
         printf("getaddrinfo error: %s\n", gai_strerror(status));
-        return 2;
+        exit(2);
     }
 
+    return info;
+}
+
+int make_socket(struct addrinfo *info) {
     // Make socket
     int sockfd = socket(info->ai_family, info->ai_socktype, info->ai_protocol);
     if (sockfd < 0) {
         perror("socket creation error");
-        return 3;
+        exit(3);
     }
 
-    // Connect to socket
+    return sockfd;
+}
+
+void connect_to_socket(int sockfd, struct addrinfo *info) {
     int connection = connect(sockfd, info->ai_addr, info->ai_addrlen);
-    freeaddrinfo(info);
     if (connection == -1) {
         perror("connection error");
-        return 4;
+        exit(4);
     }
-    printf("Connected to socket %d\n", sockfd);
+}
 
-    // Send message
-    int bytes_sent = send(sockfd, msg, strlen(msg), 0);
+void send_message(int sockfd, char *reply) {
+    int bytes_sent = send(sockfd, reply, strlen(reply), 0);
     if (bytes_sent == -1) {
         perror("message send error");
-        return 5;
+        exit(5);
     }
-    printf("Message sent!\n");
+}
 
-    // Receive reply
+char* receive_message(int sockfd) {
     char *buf = (char*) malloc(BUFFER_LEN);
     int bytes_received = recv(sockfd, buf, BUFFER_LEN, 0);
     if (bytes_received == -1) {
         perror("message receive error");
-        return 6;
+        exit(6);
     }
-    printf("Received reply: %s\n", buf);
+    return buf;
+}
+
+int main(int argc, char *argv[]) {
+    char* port = parse_args(argc, argv);
+
+    char* msg = get_input();
+
+    struct addrinfo *info = load_addr_info(port);
+    
+    int sockfd = make_socket(info);
+
+    connect_to_socket(sockfd, info);
+    printf("Connected to socket %d\n", sockfd);
+
+    send_message(sockfd, msg);
+    printf("Message sent!\n");
+
+    char *rep = receive_message(sockfd);
+    printf("Received reply: %s\n", rep);
 
     // Clean up (optional)
-    free(buf);
+    freeaddrinfo(info);
+    free(rep);
     close(sockfd);
     
     return 0;
