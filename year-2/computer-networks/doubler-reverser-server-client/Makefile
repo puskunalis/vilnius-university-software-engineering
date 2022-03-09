@@ -8,7 +8,7 @@ default: client reverser doubler
 	./client 1000 1003
 	rm client reverser doubler
 
-client: reverser doubler
+client:
 	gcc -o client client.c
 
 reverser:
