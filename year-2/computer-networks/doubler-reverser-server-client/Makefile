@@ -8,11 +8,14 @@ default: client reverser doubler
 	./client 1000 1003
 	rm client reverser doubler
 
+.PHONY: client
 client:
 	gcc -o client client.c
 
+.PHONY: reverser
 reverser:
 	gcc -o reverser reverser.c
 
+.PHONY: doubler
 doubler:
 	gcc -o doubler doubler.c
