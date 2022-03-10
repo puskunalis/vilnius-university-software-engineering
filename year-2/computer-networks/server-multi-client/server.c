@@ -161,8 +161,8 @@ int main(int argc, char *argv[]) {
                         printf("Received message from socket %d: %s\n", i, msg);
                         upper(msg);
                         send_message(i, msg);
-                        free(msg);
                     }
+                    free(msg);
                 }
             }
         }
