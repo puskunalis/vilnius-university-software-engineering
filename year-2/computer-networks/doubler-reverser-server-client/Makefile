@@ -1,11 +1,13 @@
 .DEFAULT_GOAL := default
 
+ip = ::1
+
 .PHONY: default
 default: client reverser doubler
-	(./reverser 1000 1001 > /dev/null) &
-	(./doubler 1001 1002 > /dev/null) &
-	(./reverser 1002 1003 > /dev/null) &
-	./client 1000 1003
+	(./reverser $(ip) 10000 10001 > /dev/null) &
+	(./doubler $(ip) 10001 10002 > /dev/null) &
+	(./reverser $(ip) 10002 10003 > /dev/null) &
+	./client $(ip) 10000 10003
 	rm client reverser doubler
 
 .PHONY: client

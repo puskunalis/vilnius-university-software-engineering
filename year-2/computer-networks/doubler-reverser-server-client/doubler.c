@@ -10,7 +10,7 @@
 #define BACKLOG 10
 #define BUFFER_LEN 1024
 
-struct addrinfo* load_addr_info(char *port) {
+struct addrinfo* load_addr_info(char *ip, char *port) {
     // Set hints
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
@@ -20,7 +20,7 @@ struct addrinfo* load_addr_info(char *port) {
 
     // Get address info
     struct addrinfo *info;
-    int status = getaddrinfo(NULL, port, &hints, &info);
+    int status = getaddrinfo(ip, port, &hints, &info);
     if (status != 0) {
         printf("getaddrinfo error: %s\n", gai_strerror(status));
         exit(1);
@@ -75,11 +75,14 @@ int accept_connection(int sockfd) {
 }
 
 char* receive_message(int sockfd) {
-    char *buf = (char*) malloc(BUFFER_LEN);
+    char *buf = (char*) calloc(BUFFER_LEN, sizeof(char));
     int bytes_received = recv(sockfd, buf, BUFFER_LEN, 0);
     if (bytes_received == -1) {
         perror("message receive error");
         exit(7);
+    } else if (bytes_received == 0) {
+        printf("connection closed\n");
+        exit(0);
     }
     return buf;
 }
@@ -101,19 +104,21 @@ void connect_to_socket(int sockfd, struct addrinfo *info) {
 }
 
 int main(int argc, char *argv[]) {
-    // Get port number from command line
-    if (argc < 3) {
-        printf("Please supply two port numbers!\n");
+    // Get IP address and ports from command line
+    if (argc < 4) {
+        printf("Please supply an IP address, receiving port and sending port!\n");
         exit(1);
     }
-    char* recv_port = argv[1];
-    char* send_port = argv[2];
+    char* ip = argv[1];
+    char* recv_port = argv[2];
+    char* send_port = argv[3];
 
-    struct addrinfo *info = load_addr_info(recv_port);
+    struct addrinfo *info = load_addr_info(ip, recv_port);
     
     int sockfd = make_socket(info);
 
     bind_socket(sockfd, info);
+    freeaddrinfo(info);
 
     listen_on_socket(sockfd);
     printf("Listening on port %s, socket %d\n", recv_port, sockfd);
@@ -121,32 +126,26 @@ int main(int argc, char *argv[]) {
     int newfd = accept_connection(sockfd);
     printf("Accepted incoming connection on socket %d\n", newfd);
 
-    char *msg = receive_message(newfd);
-    printf("Received message: %s\n", msg);
-
-    // Concatenate string with itself
-    char *buf = (char*) malloc(BUFFER_LEN);
-    strcpy(buf, msg);
-    strcat(msg, buf);
-
-    struct addrinfo *info_recv = load_addr_info(send_port);
-    
+    struct addrinfo *info_recv = load_addr_info(ip, send_port);
     int sockfd_send = make_socket(info_recv);
 
     connect_to_socket(sockfd_send, info_recv);
     printf("Connected to socket %d\n", sockfd_send);
-
-    send_message(sockfd_send, msg);
-    printf("Message sent: %s\n", msg);
-
-    // Clean up (optional)
-    freeaddrinfo(info);
     freeaddrinfo(info_recv);
-    free(msg);
-    free(buf);
-    close(sockfd);
-    close(sockfd_send);
-    close(newfd);
 
-    return 0;
+    while (1) {
+        char *msg = receive_message(newfd);
+        printf("Received message: %s\n", msg);
+
+        // Concatenate string with itself
+        char *buf = (char*) malloc(BUFFER_LEN);
+        strcpy(buf, msg);
+        strcat(msg, buf);
+
+        send_message(sockfd_send, msg);
+        printf("Message sent: %s\n", msg);
+
+        free(msg);
+        free(buf);
+    }
 }

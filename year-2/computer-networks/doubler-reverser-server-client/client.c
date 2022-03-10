@@ -22,7 +22,7 @@ char* get_input() {
     return msg;
 }
 
-struct addrinfo* load_addr_info(char *port) {
+struct addrinfo* load_addr_info(char *ip, char *port) {
     // Set hints
     struct addrinfo hints;
     memset(&hints, 0, sizeof(hints));
@@ -32,7 +32,7 @@ struct addrinfo* load_addr_info(char *port) {
 
     // Get address info
     struct addrinfo *info;
-    int status = getaddrinfo(NULL, port, &hints, &info);
+    int status = getaddrinfo(ip, port, &hints, &info);
     if (status != 0) {
         printf("getaddrinfo error: %s\n", gai_strerror(status));
         exit(2);
@@ -69,7 +69,7 @@ void send_message(int sockfd, char *reply) {
 }
 
 char* receive_message(int sockfd) {
-    char *buf = (char*) malloc(BUFFER_LEN);
+    char *buf = (char*) calloc(BUFFER_LEN, sizeof(char));
     int bytes_received = recv(sockfd, buf, BUFFER_LEN, 0);
     if (bytes_received == -1) {
         perror("message receive error");
@@ -114,27 +114,24 @@ void listen_on_socket(int sockfd) {
 }
 
 int main(int argc, char *argv[]) {
-    // Get port number from command line
-    if (argc < 3) {
-        printf("Please supply two port numbers!\n");
+    // Get IP address and ports from command line
+    if (argc < 4) {
+        printf("Please supply an IP address, sending port and receiving port!\n");
         exit(1);
     }
-    char* send_port = argv[1];
-    char* recv_port = argv[2];
+    char* ip = argv[1];
+    char* send_port = argv[2];
+    char* recv_port = argv[3];
 
-    char* msg = get_input();
-
-    struct addrinfo *info = load_addr_info(send_port);
+    struct addrinfo *info = load_addr_info(ip, send_port);
     
     int sockfd = make_socket(info);
 
     connect_to_socket(sockfd, info);
+    freeaddrinfo(info);
     printf("Connected to socket %d\n", sockfd);
 
-    send_message(sockfd, msg);
-    printf("Message sent: %s\n", msg);
-
-    struct addrinfo *info_recv = load_addr_info(recv_port);
+    struct addrinfo *info_recv = load_addr_info(ip, recv_port);
     
     int sockfd_recv = make_socket(info_recv);
 
@@ -146,15 +143,15 @@ int main(int argc, char *argv[]) {
     int newfd = accept_connection(sockfd_recv);
     printf("Accepted incoming connection on socket %d\n", newfd);
 
-    char *msg_recv = receive_message(newfd);
-    printf("Received message: %s\n", msg_recv);
+    while (1) {
+        char* msg = get_input();
+        send_message(sockfd, msg);
+        printf("Message sent: %s\n", msg);
+        free(msg);
 
-    // Clean up (optional)
-    freeaddrinfo(info);
-    freeaddrinfo(info_recv);
-    close(sockfd);
-    close(sockfd_recv);
-    close(newfd);
-    
-    return 0;
+        char *msg_recv = receive_message(newfd);
+        printf("Received message: %s\n", msg_recv);
+
+        free(msg_recv);
+    }
 }
