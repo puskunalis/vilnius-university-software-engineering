@@ -22,14 +22,8 @@ char* parse_args(int argc, char *argv[]) {
 
 char* get_input() {
     // Ask for text input
-    printf("Enter a message to send: ");
     char* msg = (char*) malloc(BUFFER_LEN);
     fgets(msg, BUFFER_LEN, stdin);
-    while (strlen(msg) <= 1) {
-        printf("Enter a message to send: ");
-        fgets(msg, BUFFER_LEN, stdin);
-    }
-    msg[strcspn(msg, "\n")] = 0;
     return msg;
 }
 
@@ -98,7 +92,7 @@ void *message_receiver(void *ptr) {
             free(msg);
             return NULL;
         }
-        printf("Received message: %s\n", msg);
+        printf("%s", msg);
         free(msg);
     }
 }
@@ -113,6 +107,24 @@ int main(int argc, char *argv[]) {
     connect_to_socket(sockfd, info);
     printf("Connected to socket %d\n", sockfd);
 
+    while (1) {
+        int bytes_received;
+        char *msg = receive_message(sockfd, &bytes_received);
+        if (strcmp(msg, "ATSIUSKVARDA\n") == 0) {
+            printf("Enter your username: ");
+            char* username = (char*) malloc(BUFFER_LEN);
+            fgets(username, BUFFER_LEN, stdin);
+            while (strlen(username) <= 1) {
+                printf("Enter your username: ");
+                fgets(username, BUFFER_LEN, stdin);
+            }
+            username[strcspn(username, "\n")] = 0;
+            send_message(sockfd, username);
+        } else if (strcmp(msg, "VARDASOK\n") == 0) {
+            break;
+        }
+    }
+
     pthread_t receiver_thread;
     pthread_create(&receiver_thread, NULL, message_receiver, (void*)&sockfd);
 
@@ -120,7 +132,6 @@ int main(int argc, char *argv[]) {
         char* msg = get_input();
         send_message(sockfd, msg);
         free(msg);
-        puts("Message sent!");
     }
 
     // Clean up (optional)

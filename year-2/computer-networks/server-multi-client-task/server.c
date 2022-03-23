@@ -9,6 +9,12 @@
 
 #define BACKLOG 10
 #define BUFFER_LEN 1024
+#define MAX_CLIENTS 32
+
+typedef struct Client {
+    int sockfd;
+    char *name;
+} Client;
 
 char** parse_args(int argc, char *argv[]) {
     if (argc < 4) {
@@ -134,6 +140,9 @@ int main(int argc, char *argv[]) {
     char* recv_port = args[2];
     char* send_port = args[3];
 
+    Client** clients = (Client**) calloc(MAX_CLIENTS, sizeof(Client*));
+    int clients_num = 0;
+
     struct addrinfo *info = load_addr_info(recv_port);
     
     int sockfd = make_socket(info);
@@ -155,6 +164,10 @@ int main(int argc, char *argv[]) {
 
     int serversockfd = connect_to_server(send_port);
 
+    int newserversockfd = accept_connection(sockfd);
+    FD_SET(newserversockfd, &master);
+    printf("Connection accepted from another server on socket %d\n", newserversockfd);
+
     while (1) {
         read_fds = master;
 
@@ -172,6 +185,30 @@ int main(int argc, char *argv[]) {
                     if (newfd > fdmax) {
                         fdmax = newfd;
                     }
+                    while (1) {
+                        send_message(newfd, "ATSIUSKVARDA\n");
+                        int bytes_received;
+                        char* msg = receive_message(newfd, &bytes_received);
+                        msg[strcspn(msg, "\r")] = 0;
+                        msg[strcspn(msg, "\n")] = 0;
+                        int name_exists = 0;
+                        for (int j = 0; j < clients_num; j++) {
+                            if (strcmp(msg, clients[j]->name) == 0) {
+                                name_exists = 1;
+                                break;
+                            }
+                        }
+                        if (name_exists) {
+                            continue;
+                        }
+                        Client* client = (Client*) malloc(sizeof(Client));
+                        client->name = msg;
+                        client->sockfd = newfd;
+                        clients[clients_num] = client;
+                        clients_num++;
+                        send_message(newfd, "VARDASOK\n");
+                        break;
+                    }
                 } else {
                     int bytes_received;
                     char* msg = receive_message(i, &bytes_received);
@@ -180,23 +217,38 @@ int main(int argc, char *argv[]) {
                         close(i);
                         FD_CLR(i, &master);
                     } else {
-                        printf("Received message from socket %d: %s\n", i, msg);
+                        printf("Received message from socket %d of length %d: %s\n", i, bytes_received, msg);
                         char *prefix = (char*) calloc(BUFFER_LEN+1, sizeof(char));
                         prefix[0] = '@';
                         strcpy(prefix+1, server_name);
                         if (is_prefix(prefix, msg)) {
-                            for (int j = 0; j <= fdmax; j++) {
-                                if (FD_ISSET(j, &master)) {
-                                    if (j != sockfd && j != i) {
-                                        send_message(j, msg+4);
-                                    }
+                            msg = msg + 2 + strlen(server_name);
+                        } else if (msg[0] == '@') {
+                            send_message(serversockfd, msg);
+                            free(msg);
+                            continue;
+                        }
+                        char *name;
+                        for (int j = 0; j < clients_num; j++) {
+                            if (i == clients[j]->sockfd) {
+                                name = clients[j]->name;
+                            }
+                        }
+                        char *namedMsg = (char*) calloc(BUFFER_LEN*2, sizeof(char));
+                        strcpy(namedMsg, "PRANESIMAS");
+                        strcpy(namedMsg+10, name);
+                        int len = strlen(namedMsg);
+                        namedMsg[len] = ':';
+                        namedMsg[len+1] = ' ';
+                        strcpy(namedMsg+len+2, msg);
+                        for (int j = 0; j <= fdmax; j++) {
+                            if (FD_ISSET(j, &master)) {
+                                if (j != sockfd) {
+                                    send_message(j, namedMsg);
                                 }
                             }
-                        } else {
-                            send_message(serversockfd, msg);
                         }
                     }
-                    free(msg);
                 }
             }
         }
