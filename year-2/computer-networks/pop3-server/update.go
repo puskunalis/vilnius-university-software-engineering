@@ -1,5 +1,7 @@
 package main
 
+import "fmt"
+
 func (c *Client) handleUpdate() {
 	var messages []*Message
 	for _, msg := range c.maildrop.messages {
@@ -18,5 +20,6 @@ func (c *Client) handleUpdate() {
 
 	c.maildrop.lock = false
 
+	fmt.Printf("Connection closed on %s\n", c.conn.RemoteAddr())
 	c.conn.Close()
 }

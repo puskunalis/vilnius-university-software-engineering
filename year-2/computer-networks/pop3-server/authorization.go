@@ -57,6 +57,7 @@ func (c *Client) handleAuthorization() {
 			c.ERR("permission denied")
 		case "QUIT":
 			c.OK("POP3 server signing off")
+			fmt.Printf("Connection closed on %s\n", c.conn.RemoteAddr())
 			c.conn.Close()
 			return
 		case "APOP":
