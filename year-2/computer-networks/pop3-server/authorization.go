@@ -24,8 +24,9 @@ func (c *Client) handleAuthorization() {
 				continue
 			}
 
-			if _, ok := maildrops[arg1]; ok {
+			if maildrop, ok := maildrops[arg1]; ok {
 				c.name = arg1
+				c.maildrop = maildrop
 				c.OK("username ok")
 			} else {
 				c.ERR("user does not exist")
@@ -36,20 +37,13 @@ func (c *Client) handleAuthorization() {
 				continue
 			}
 
-			maildrop, ok := maildrops[c.name]
-			if !ok {
-				c.ERR("maildrop not found")
-				continue
-			}
-
-			if maildrop.lock {
+			if c.maildrop.lock {
 				c.ERR("maildrop is locked")
 				continue
 			}
 
-			if c.name != "" && maildrop.password == arg1 {
-				c.maildrop = maildrop
-				maildrop.lock = true
+			if c.name != "" && c.maildrop.password == arg1 {
+				c.maildrop.lock = true
 				c.handleTransaction()
 				return
 			}
