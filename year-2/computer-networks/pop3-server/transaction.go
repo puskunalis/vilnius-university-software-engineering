@@ -13,8 +13,9 @@ func (c *Client) handleTransaction() {
 	messages, size := c.maildrop.info()
 	c.OK("%s's maildrop has %d messages (%d octets)", c.name, messages, size)
 
+	reader := bufio.NewReader(c.conn)
+
 	for {
-		reader := bufio.NewReader(c.conn)
 		msg, err := reader.ReadString('\r')
 		if err != nil {
 			fmt.Printf("Connection closed on %s\n", c.conn.RemoteAddr())
