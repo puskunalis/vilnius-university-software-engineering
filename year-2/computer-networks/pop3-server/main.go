@@ -12,9 +12,10 @@ import (
 )
 
 type Message struct {
-	Delete  bool
-	Headers map[string]string
-	Body    string
+	Delete     bool
+	Headers    map[string]string
+	Body       string
+	Attachment []byte
 }
 
 type Maildrop struct {
@@ -41,7 +42,7 @@ var (
 	maildrops = map[string]*Maildrop{
 		"a": {password: "a123", secret: "a123secret", messages: []*Message{{Body: "a"}, {Body: "123"}}},
 		"b": {password: "b123", secret: "bb123secret", messages: []*Message{{Body: "b"}, {Body: "b"}, {Body: "123123"}}},
-		"c": {password: "c123", secret: "ccc123secret", messages: []*Message{{Body: "c"}, {Body: "cc"}, {Body: "ccc"}, {Headers: map[string]string{"From": "A", "To": "C"}, Body: "123\r\n123\r\n123"}}},
+		"c": {password: "c123", secret: "ccc123secret", messages: []*Message{{Body: "c"}, {Body: "cc"}, {Body: "ccc"}, {Headers: map[string]string{"From": "A", "To": "C"}, Body: "123\r\n123\r\n123", Attachment: []byte("attachment")}}},
 	}
 )
 
@@ -52,7 +53,7 @@ func main() {
 	}
 	defer ln.Close()
 
-	fmt.Println("POP3 server is running")
+	fmt.Printf("POP3 server is running at %s, port %d\n", Hostname, Port)
 
 	for {
 		conn, err := ln.Accept()
