@@ -42,7 +42,19 @@ var (
 	maildrops = map[string]*Maildrop{
 		"a": {password: "a123", secret: "a123secret", messages: []*Message{{Body: "a"}, {Body: "123"}}},
 		"b": {password: "b123", secret: "bb123secret", messages: []*Message{{Body: "b"}, {Body: "b"}, {Body: "123123"}}},
-		"c": {password: "c123", secret: "ccc123secret", messages: []*Message{{Body: "c"}, {Body: "cc"}, {Body: "ccc"}, {Headers: map[string]string{"From": "A", "To": "C"}, Body: "123\r\n123\r\n123", Attachment: []byte("attachment")}}},
+		"c": {password: "c123", secret: "ccc123secret", messages: []*Message{
+			{Body: ""},
+			{Body: "c"},
+			{Body: "cc"},
+			{Body: "ccc"},
+			{Body: "one"},
+			{Body: "two"},
+			{Body: "three"},
+			{Body: "123asd123"},
+			{Body: "+37061234567"},
+			{Body: "+37069876543"},
+			{Headers: map[string]string{"From": "A", "To": "C"}, Body: "123\r\n123\r\n123", Attachment: []byte("attachment")},
+		}},
 	}
 )
 

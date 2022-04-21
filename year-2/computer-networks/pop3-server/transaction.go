@@ -3,6 +3,7 @@ package main
 import (
 	"bufio"
 	"fmt"
+	"regexp"
 	"strconv"
 	"strings"
 
@@ -27,6 +28,30 @@ func (c *Client) handleTransaction() {
 		cmd, arg1, arg2 := parseMessage(msg)
 
 		switch cmd {
+		// Custom command
+		case "REGX":
+			re, err := regexp.Compile(arg1)
+			if err != nil {
+				c.ERR("invalid regular expression")
+				continue
+			}
+
+			var matchedMessages []int
+			var size int
+
+			for i, msg := range c.maildrop.messages {
+				if !msg.Delete && re.MatchString(msg.Body) {
+					matchedMessages = append(matchedMessages, i+1)
+					size += len(msg.Body)
+				}
+			}
+
+			c.OK("%d messages (%d octets)", len(matchedMessages), size)
+
+			for _, msg := range matchedMessages {
+				c.Send("%d %d", msg, len(c.maildrop.messages[msg-1].Body))
+			}
+			c.Send(".")
 		case "STAT":
 			messages, size := c.maildrop.info()
 			c.OK("%d %d", messages, size)
