@@ -6,3 +6,6 @@ Vilnius University, Software Engineering, Bachelor, 2020-2024 schoolwork
   * Computer Architecture (x86 assembly)
   * Algorithms and Data Structures (C)
   * Object-Oriented Programming (Java)
+* Year 2:
+  * Computer Networks (C, Go)
+  * Database Management Systems (PostgreSQL)
