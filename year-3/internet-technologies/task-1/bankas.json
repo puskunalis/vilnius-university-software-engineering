@@ -1,0 +1,43 @@
+{
+    "bankas": {
+        "klientai": [
+            {
+                "id": 9876,
+                "vardas": "Vardenis",
+                "pavarde": "Pavardenis",
+                "gimimo-data": "2000-01-01",
+                "saskaitos": [
+                    {
+                        "iban": "LT121000011101001000"
+                    }
+                ]
+            }
+        ],
+        "saskaitos": [
+            {
+                "iban": "LT121000011101001000",
+                "likutis": 1234.56,
+                "israsas": [
+                    {
+                        "tipas": "kreditas",
+                        "data": "2001-01-01",
+                        "suma": 2234.56
+                    },
+                    {
+                        "tipas": "debetas",
+                        "data": "2001-02-01",
+                        "suma": 1000
+                    }
+                ]
+            }
+        ],
+        "korteles": [
+            {
+                "numeris": "4444555566667777",
+                "iban": "LT121000011101001000",
+                "galiojimo-data": "2002-01-31",
+                "cvc": 123
+            }
+        ]
+    }
+}
