@@ -11,6 +11,15 @@
                 <kl:saskaita iban="LT121000011101001000"/>
             </kl:saskaitos>
         </kl:klientas>
+        <kl:klientas id="5678">
+            <kl:vardas>Vardauskas</kl:vardas>
+            <kl:pavarde>Pavardauskas</kl:pavarde>
+            <kl:gimimo-data>1990-01-01</kl:gimimo-data>
+            <kl:saskaitos>
+                <kl:saskaita iban="LT121000011101001001"/>
+                <kl:saskaita iban="LT121000011101001002"/>
+            </kl:saskaitos>
+        </kl:klientas>
     </klientai>
 
     <saskaitos xmlns:sa="http://puskunalis.lt/xml/saskaitos">
@@ -27,6 +36,19 @@
                 </sa:pavedimas>
             </sa:israsas>
         </sa:saskaita>
+        <sa:saskaita iban="LT121000011101001001">
+            <sa:likutis>0.00</sa:likutis>
+            <sa:israsas></sa:israsas>
+        </sa:saskaita>
+        <sa:saskaita iban="LT121000011101001002">
+            <sa:likutis>1.00</sa:likutis>
+            <sa:israsas>
+                <sa:pavedimas tipas="kreditas">
+                    <sa:data>1999-03-03</sa:data>
+                    <sa:suma>1.00</sa:suma>
+                </sa:pavedimas>
+            </sa:israsas>
+        </sa:saskaita>
     </saskaitos>
 
     <korteles xmlns:ko="http://puskunalis.lt/xml/korteles">
@@ -34,6 +56,11 @@
             <ko:saskaita iban="LT121000011101001000"/>
             <ko:galiojimo-data>2002-01-31</ko:galiojimo-data>
             <ko:cvc>123</ko:cvc>
+        </ko:kortele>
+        <ko:kortele numeris="4444555566668888">
+            <ko:saskaita iban="LT121000011101001002"/>
+            <ko:galiojimo-data>2003-01-31</ko:galiojimo-data>
+            <ko:cvc>456</ko:cvc>
         </ko:kortele>
     </korteles>
 
