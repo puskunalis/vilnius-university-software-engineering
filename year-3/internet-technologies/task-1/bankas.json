@@ -5,7 +5,7 @@
                 "id": 9876,
                 "vardas": "Vardenis",
                 "pavarde": "Pavardenis",
-                "gimimo-data": "2000-01-01",
+                "gimimoData": "2000-01-01",
                 "saskaitos": [
                     {
                         "iban": "LT121000011101001000"
@@ -16,7 +16,7 @@
                 "id": 5678,
                 "vardas": "Vardauskas",
                 "pavarde": "Pavardauskas",
-                "gimimo-data": "1990-01-01",
+                "gimimoData": "1990-01-01",
                 "saskaitos": [
                     {
                         "iban": "LT121000011101001001"
@@ -42,12 +42,14 @@
                         "data": "2001-02-01",
                         "suma": 1000
                     }
-                ]
+                ],
+                "sukurimoData": "2000-06-01"
             },
             {
                 "iban": "LT121000011101001001",
                 "likutis": 0.00,
-                "israsas": []
+                "israsas": [],
+                "sukurimoData": "1997-01-01"
             },
             {
                 "iban": "LT121000011101001002",
@@ -58,20 +60,21 @@
                         "data": "1999-03-03",
                         "suma": 1.00
                     }
-                ]
+                ],
+                "sukurimoData": "1998-01-01"
             }
         ],
         "korteles": [
             {
                 "numeris": "4444555566667777",
                 "iban": "LT121000011101001000",
-                "galiojimo-data": "2002-01-31",
+                "galiojimoData": "2002-01-31",
                 "cvc": 123
             },
             {
                 "numeris": "4444555566668888",
                 "iban": "LT121000011101001002",
-                "galiojimo-data": "2003-01-31",
+                "galiojimoData": "2003-01-31",
                 "cvc": 456
             }
         ]

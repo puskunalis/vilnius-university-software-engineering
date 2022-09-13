@@ -35,10 +35,12 @@
                     <sa:suma>1000.00</sa:suma>
                 </sa:pavedimas>
             </sa:israsas>
+            <sa:sukurimo-data>2000-06-01</sa:sukurimo-data>
         </sa:saskaita>
         <sa:saskaita iban="LT121000011101001001">
             <sa:likutis>0.00</sa:likutis>
             <sa:israsas></sa:israsas>
+            <sa:sukurimo-data>1997-01-01</sa:sukurimo-data>
         </sa:saskaita>
         <sa:saskaita iban="LT121000011101001002">
             <sa:likutis>1.00</sa:likutis>
@@ -48,6 +50,7 @@
                     <sa:suma>1.00</sa:suma>
                 </sa:pavedimas>
             </sa:israsas>
+            <sa:sukurimo-data>1998-01-01</sa:sukurimo-data>
         </sa:saskaita>
     </saskaitos>
 
@@ -65,3 +68,114 @@
     </korteles>
 
 </bankas>
+
+<!--
+    XPath užduotis
+
+    1. Pasirinkti savo XML dokumente vieną žymę (turinčią bent vieną protėvį, ir bent vieną anūką), parašyti XPath kelią, unikaliai nueinantį prie tos žymės, ir prie to kelio prirašyti dar vieną žingsnį, naudojant šias ašis: ancestor, descendant, following-sibling, preceding-sibling, following, preceding, attribute (po vieną pavyzdį kiekvienai ašiai), mokėti paaiškinti rezultatą
+
+        Sprendimas:
+
+            Einame iki pirmos <sa:israsas> žymės:
+
+                (//*[name()="sa:israsas"])[1]
+            
+            Protėviniai mazgai:
+
+                (//*[name()="sa:israsas"])[1]/ancestor::*
+
+            Mazgai-įpėdiniai:
+
+                (//*[name()="sa:israsas"])[1]/descendant::*
+            
+            Mazgai-broliai, einantys po einamojo mazgo:
+
+                (//*[name()="sa:israsas"])[1]/following-sibling::*
+            
+            Mazgai-broliai, einantys prieš einamąjį mazgą:
+
+                (//*[name()="sa:israsas"])[1]/preceding-sibling::*
+            
+            Mazgai, einantys po einamojo mazgo:
+
+                (//*[name()="sa:israsas"])[1]/following::*
+            
+            Mazgai, einantys prieš einamąjį mazgą:
+
+                (//*[name()="sa:israsas"])[1]/preceding::*
+        
+            Mazgai-atributai įpėdiniuose:
+
+                (//*[name()="sa:israsas"])[1]/descendant::*/attribute::*
+
+    2. Parašyti XPath kelią su predikatu, kurio viduje yra panaudotas XPath kelias (pvz.: rasti visas žymes A, kurių atributas x turi tokią pačią reikšmę kaip penktos dokumente žymės B atributas y; čia A, B, x, y pakeiskite į savo dokumento žymes/atributus), paaiškinti predikato veikimo principą
+
+        Sprendimas:
+
+            Ieškome banko sąskaitos, kurios IBAN lygus pirmo kliento pirmos sąskaitos IBAN:
+
+                //*[name()="sa:saskaita"][@iban = (//*[name()="kl:saskaita"])[1]/@iban]
+
+    3. Funkcijas count() ir sum() (pvz., suskaičiuoti, kiek yra tam tikrų žymių/atributų, susumuoti tam tikrų žymių turinį), gebėti paaiškinti, ką ir kodėl grąžina išraiška sum(//*)šiam XML dokumentui: <a><b>2</b><c>3</c></a> (dėstytojas pakeis XML dokumentą)
+
+        Sprendimas:
+
+            Kiek banke klientų:
+
+                count(//*[name()="kl:klientas"])
+
+            Visų sąskaitų likučių suma:
+        
+                sum(//*[name()="sa:likutis"])
+
+    4. Operacijas <, =, + su skirtingų tipų operandais, ir paaiškinti, kaip apliekamas automatinis tipų konvertavimas (pvz. mokėti paaiškinti, kaip apskaičiuojamas išraiškos 5 < "kuku" rezultatas).
+
+        Sprendimas:
+
+            Ar pirmos sąskaitos likutis didesnis už visų kitų sąskaitų likučių sumą:
+
+                (//*[name()="sa:likutis"])[1] > sum((//*[name()="sa:likutis"])[1]/following::*[name()="sa:likutis"])
+            
+            Ar pirmos sąskaitos likutis lygus 987.65?
+
+                (//*[name()="sa:likutis"])[1] = 987.65
+
+            Trečios sąskaitos likutis plius 5:
+
+                (//*[name()="sa:likutis"])[3] + 5
+
+    5. Reikia parašyti trijų žingsnių XPath išraišką (turi būti naudojamas bent vienas predikatas ir dvi skirtingos ašys) ir į atsiskaitymą atsinešti nupieštas aibes, kurios sukuriamos kiekvieno žingsnio apdorojimo rezultate
+
+        Sprendimas:
+
+            1. [ sa:pavedimas, sa:pavedimas, sa:pavedimas ]
+            2. [ sa:pavedimas ]
+            3. [ sa:data, sa:suma ]
+
+            //*[name()="sa:pavedimas"]/following-sibling::*/descendant::*
+
+    6. parašyti išraišką, su operatoriumi = arba != lyginančią:
+        1. aibę ir skaičių,
+        2. aibę ir eilutę,
+        3. aibę ir loginę reikšmę,
+        4. dvi aibes
+    bei mokėti paaiškinti visais atvejais atliekamus tipų konvertavimus
+
+        Sprendimas:
+
+            1. //*[name()="sa:likutis"]=0
+
+            2. //*[name()="sa:likutis"]="1234.56"
+
+            3. //*[name()="sa:likutis"]=true
+
+            4. //*[name()="sa:likutis"]=//*[name()="sa:suma"]
+-->
+
+<!-- 
+    7. parašyti išraišką, su operatoriais <, > lyginančią dvi aibes ir mokėti paaiškinti atliekamus automatinius tipų konvertavimus
+
+        Sprendimas:
+
+            //*[name()="sa:likutis"]<//*[name()="sa:suma"]
+-->
