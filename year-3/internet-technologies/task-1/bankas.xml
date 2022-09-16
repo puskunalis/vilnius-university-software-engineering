@@ -167,7 +167,7 @@
 
             2. //*[name()="sa:likutis"]="1234.56"
 
-            3. //*[name()="sa:likutis"]=true
+            3. //*[name()="sa:likutis"]=true()
 
             4. //*[name()="sa:likutis"]=//*[name()="sa:suma"]
 -->
