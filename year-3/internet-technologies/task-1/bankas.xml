@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<bankas xmlns="http://puskunalis.lt/xml">
+<bankas xmlns="http://puskunalis.lt/bankas/xml">
 
-    <klientai xmlns:kl="http://puskunalis.lt/xml/klientai">
+    <klientai xmlns:kl="http://puskunalis.lt/bankas/xml/klientai">
         <kl:klientas id="9876">
             <kl:vardas>Vardenis</kl:vardas>
             <kl:pavarde>Pavardenis</kl:pavarde>
@@ -22,7 +22,7 @@
         </kl:klientas>
     </klientai>
 
-    <saskaitos xmlns:sa="http://puskunalis.lt/xml/saskaitos">
+    <saskaitos xmlns:sa="http://puskunalis.lt/bankas/xml/saskaitos">
         <sa:saskaita iban="LT121000011101001000">
             <sa:likutis>1234.56</sa:likutis>
             <sa:israsas>
@@ -54,7 +54,7 @@
         </sa:saskaita>
     </saskaitos>
 
-    <korteles xmlns:ko="http://puskunalis.lt/xml/korteles">
+    <korteles xmlns:ko="http://puskunalis.lt/bankas/xml/korteles">
         <ko:kortele numeris="4444555566667777">
             <ko:saskaita iban="LT121000011101001000"/>
             <ko:galiojimo-data>2002-01-31</ko:galiojimo-data>
