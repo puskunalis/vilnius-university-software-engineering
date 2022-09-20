@@ -34,7 +34,7 @@
     </xs:simpleType>
 
     <xs:simpleType name="cvcT">
-        <xs:restriction base="xs:string">
+        <xs:restriction base="idT">
             <xs:pattern value="\d{3}" />
         </xs:restriction>
     </xs:simpleType>

@@ -7,18 +7,19 @@
     
     <xs:include schemaLocation="tipai.xsd" />
 
-    <xs:element name="kortele">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="saskaita" maxOccurs="unbounded">
-                    <xs:complexType>
-                        <xs:attribute name="iban" type="ibanT" />
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="galiojimo-data" type="xs:date" />
-                <xs:element name="cvc" type="cvcT" />
-            </xs:sequence>
-            <xs:attribute name="numeris" type="kortelesNumerisT" />
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="saskaitaT">
+        <xs:attribute name="iban" type="ibanT" />
+    </xs:complexType>
+
+    <xs:complexType name="korteleT">
+        <xs:sequence>
+            <xs:element name="saskaita" type="saskaitaT" maxOccurs="unbounded" />
+            <xs:element name="galiojimo-data" type="xs:date" />
+            <xs:element name="cvc" type="cvcT" />
+        </xs:sequence>
+        <xs:attribute name="numeris" type="kortelesNumerisT" />
+    </xs:complexType>
+
+    <xs:element name="kortele" type="korteleT" />
+
 </xs:schema>

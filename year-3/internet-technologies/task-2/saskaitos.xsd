@@ -6,29 +6,30 @@
            elementFormDefault="qualified">
     
     <xs:include schemaLocation="tipai.xsd" />
+    
+    <xs:complexType name="pavedimasT">
+        <xs:sequence>
+            <xs:element name="data" type="xs:date" />
+            <xs:element name="suma" type="sumaT" />
+        </xs:sequence>
+        <xs:attribute name="tipas" type="pavedimoTipasT" />
+    </xs:complexType>
 
-    <xs:element name="saskaita">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="likutis" type="sumaT" />
-                <xs:element name="israsas">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="pavedimas" minOccurs="0" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:sequence>
-                                        <xs:element name="data" type="xs:date" />
-                                        <xs:element name="suma" type="sumaT" />
-                                    </xs:sequence>
-                                    <xs:attribute name="tipas" type="pavedimoTipasT" />
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-                <xs:element name="sukurimo-data" type="xs:date" />
-            </xs:sequence>
-            <xs:attribute name="iban" type="ibanT" />
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="israsasT">
+        <xs:sequence>
+            <xs:element name="pavedimas" type="pavedimasT" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="saskaitaT">
+        <xs:sequence>
+            <xs:element name="likutis" type="sumaT" />
+            <xs:element name="israsas" type="israsasT" />
+            <xs:element name="sukurimo-data" type="xs:date" />
+        </xs:sequence>
+        <xs:attribute name="iban" type="ibanT" />
+    </xs:complexType>
+
+    <xs:element name="saskaita" type="saskaitaT" />
+
 </xs:schema>

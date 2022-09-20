@@ -7,25 +7,26 @@
     
     <xs:include schemaLocation="tipai.xsd" />
 
-    <xs:element name="klientas">
-        <xs:complexType>
-            <xs:sequence>
-                <xs:element name="vardas" type="xs:string" />
-                <xs:element name="pavarde" type="xs:string" />
-                <xs:element name="gimimo-data" type="xs:date" />
-                <xs:element name="saskaitos">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="saskaita" maxOccurs="unbounded">
-                                <xs:complexType>
-                                    <xs:attribute name="iban" type="ibanT" />
-                                </xs:complexType>
-                            </xs:element>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
-            <xs:attribute name="id" type="idT" />
-        </xs:complexType>
-    </xs:element>
+    <xs:complexType name="saskaitaT">
+        <xs:attribute name="iban" type="ibanT" />
+    </xs:complexType>
+
+    <xs:complexType name="saskaitosT">
+        <xs:sequence>
+            <xs:element name="saskaita" type="saskaitaT" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="klientasT">
+        <xs:sequence>
+            <xs:element name="vardas" type="xs:string" />
+            <xs:element name="pavarde" type="xs:string" />
+            <xs:element name="gimimo-data" type="xs:date" />
+            <xs:element name="saskaitos" type="saskaitosT" />
+        </xs:sequence>
+        <xs:attribute name="id" type="idT" />
+    </xs:complexType>
+
+    <xs:element name="klientas" type="klientasT" />
+
 </xs:schema>
