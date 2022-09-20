@@ -25,7 +25,7 @@
                     </xs:complexType>
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:integer" />
+            <xs:attribute name="id" type="idT" />
         </xs:complexType>
     </xs:element>
 </xs:schema>

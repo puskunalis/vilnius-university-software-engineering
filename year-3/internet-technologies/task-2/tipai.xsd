@@ -2,6 +2,12 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+    <xs:simpleType name="idT">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\d+" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="ibanT">
         <xs:restriction base="xs:string">
             <xs:pattern value="LT\d{18}" />
@@ -10,7 +16,7 @@
 
     <xs:simpleType name="sumaT">
         <xs:restriction base="xs:string">
-            <xs:pattern value="\d{1,}\.\d{2}" />
+            <xs:pattern value="\d+\.\d{2}" />
         </xs:restriction>
     </xs:simpleType>
 
