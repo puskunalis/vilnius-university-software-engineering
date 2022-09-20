@@ -8,31 +8,31 @@
            xmlns:ko="http://puskunalis.lt/bankas/xml/korteles"
            elementFormDefault="qualified">
 
-           <xs:import namespace="http://puskunalis.lt/bankas/xml/klientai" schemaLocation="klientai.xsd"/>
-           <xs:import namespace="http://puskunalis.lt/bankas/xml/saskaitos" schemaLocation="saskaitos.xsd"/>
-           <xs:import namespace="http://puskunalis.lt/bankas/xml/korteles" schemaLocation="korteles.xsd"/>
-           
+    <xs:import namespace="http://puskunalis.lt/bankas/xml/klientai" schemaLocation="klientai.xsd" />
+    <xs:import namespace="http://puskunalis.lt/bankas/xml/saskaitos" schemaLocation="saskaitos.xsd" />
+    <xs:import namespace="http://puskunalis.lt/bankas/xml/korteles" schemaLocation="korteles.xsd" />
+
     <xs:element name="bankas">
         <xs:complexType>
             <xs:sequence>
                 <xs:element name="klientai">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="kl:klientas" maxOccurs="unbounded"/>
+                            <xs:element ref="kl:klientas" maxOccurs="unbounded" />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="saskaitos">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="sa:saskaita" maxOccurs="unbounded"/>
+                            <xs:element ref="sa:saskaita" maxOccurs="unbounded" />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
                 <xs:element name="korteles">
                     <xs:complexType>
                         <xs:sequence>
-                            <xs:element ref="ko:kortele" maxOccurs="unbounded"/>
+                            <xs:element ref="ko:kortele" maxOccurs="unbounded" />
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>

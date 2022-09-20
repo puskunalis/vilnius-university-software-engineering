@@ -8,7 +8,7 @@
             <kl:pavarde>Pavardenis</kl:pavarde>
             <kl:gimimo-data>2000-01-01</kl:gimimo-data>
             <kl:saskaitos>
-                <kl:saskaita iban="LT121000011101001000"/>
+                <kl:saskaita iban="LT121000011101001000" />
             </kl:saskaitos>
         </kl:klientas>
         <kl:klientas id="5678">
@@ -16,8 +16,8 @@
             <kl:pavarde>Pavardauskas</kl:pavarde>
             <kl:gimimo-data>1990-01-01</kl:gimimo-data>
             <kl:saskaitos>
-                <kl:saskaita iban="LT121000011101001001"/>
-                <kl:saskaita iban="LT121000011101001002"/>
+                <kl:saskaita iban="LT121000011101001001" />
+                <kl:saskaita iban="LT121000011101001002" />
             </kl:saskaitos>
         </kl:klientas>
     </klientai>
@@ -56,12 +56,12 @@
 
     <korteles xmlns:ko="http://puskunalis.lt/bankas/xml/korteles">
         <ko:kortele numeris="4444555566667777">
-            <ko:saskaita iban="LT121000011101001000"/>
+            <ko:saskaita iban="LT121000011101001000" />
             <ko:galiojimo-data>2002-01-31</ko:galiojimo-data>
             <ko:cvc>123</ko:cvc>
         </ko:kortele>
         <ko:kortele numeris="4444555566668888">
-            <ko:saskaita iban="LT121000011101001002"/>
+            <ko:saskaita iban="LT121000011101001002" />
             <ko:galiojimo-data>2003-01-31</ko:galiojimo-data>
             <ko:cvc>456</ko:cvc>
         </ko:kortele>

@@ -7,7 +7,7 @@
 
     <xs:simpleType name="ibanT">
         <xs:restriction base="xs:string">
-            <xs:pattern value="LT\d{18}"/>
+            <xs:pattern value="LT\d{18}" />
         </xs:restriction>
     </xs:simpleType>
 
