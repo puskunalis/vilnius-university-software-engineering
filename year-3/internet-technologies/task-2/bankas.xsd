@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+           targetNamespace="http://puskunalis.lt/bankas/xml"
+           xmlns="http://puskunalis.lt/bankas/xml"
+           xmlns:kl="http://puskunalis.lt/bankas/xml/klientai"
+           xmlns:sa="http://puskunalis.lt/bankas/xml/saskaitos"
+           xmlns:ko="http://puskunalis.lt/bankas/xml/korteles"
+           elementFormDefault="qualified">
+
+           <xs:import namespace="http://puskunalis.lt/bankas/xml/klientai" schemaLocation="klientai.xsd"/>
+           <xs:import namespace="http://puskunalis.lt/bankas/xml/saskaitos" schemaLocation="saskaitos.xsd"/>
+           <xs:import namespace="http://puskunalis.lt/bankas/xml/korteles" schemaLocation="korteles.xsd"/>
+           
+    <xs:element name="bankas">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="klientai">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="kl:klientas" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="saskaitos">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="sa:saskaita" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="korteles">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="ko:kortele" maxOccurs="unbounded"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
