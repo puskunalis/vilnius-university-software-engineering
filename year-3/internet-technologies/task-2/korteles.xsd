@@ -7,10 +7,6 @@
     
     <xs:include schemaLocation="tipai.xsd" />
 
-    <xs:complexType name="saskaitaT">
-        <xs:attribute name="iban" type="ibanT" />
-    </xs:complexType>
-
     <xs:complexType name="korteleT">
         <xs:sequence>
             <xs:element name="saskaita" type="saskaitaT" maxOccurs="unbounded" />

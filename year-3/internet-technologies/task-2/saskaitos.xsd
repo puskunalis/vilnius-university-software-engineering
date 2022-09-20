@@ -21,15 +21,18 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="saskaitaT">
-        <xs:sequence>
-            <xs:element name="likutis" type="sumaT" />
-            <xs:element name="israsas" type="israsasT" />
-            <xs:element name="sukurimo-data" type="xs:date" />
-        </xs:sequence>
-        <xs:attribute name="iban" type="ibanT" />
+    <xs:complexType name="pilnaSaskaitaT">
+        <xs:complexContent>
+            <xs:extension base="saskaitaT">
+                <xs:sequence>
+                    <xs:element name="likutis" type="sumaT" />
+                    <xs:element name="israsas" type="israsasT" />
+                    <xs:element name="sukurimo-data" type="xs:date" />
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
-    <xs:element name="saskaita" type="saskaitaT" />
+    <xs:element name="saskaita" type="pilnaSaskaitaT" />
 
 </xs:schema>
