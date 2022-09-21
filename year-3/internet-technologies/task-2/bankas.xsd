@@ -3,6 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://puskunalis.lt/bankas/xml"
            xmlns="http://puskunalis.lt/bankas/xml"
+           xmlns:ba="http://puskunalis.lt/bankas/xml"
            xmlns:kl="http://puskunalis.lt/bankas/xml/klientai"
            xmlns:sa="http://puskunalis.lt/bankas/xml/saskaitos"
            xmlns:ko="http://puskunalis.lt/bankas/xml/korteles"
@@ -33,26 +34,61 @@
     <xs:complexType name="bankasT">
         <xs:sequence>
             <xs:element name="klientai" type="klientaiT">
-                <xs:unique name="unikalusKlientuID">
+                <xs:key name="unikalusKlientuID">
                     <xs:selector xpath="kl:klientas" />
                     <xs:field xpath="@id" />
-                </xs:unique>
+                </xs:key>
             </xs:element>
-            <xs:element name="saskaitos" type="saskaitosT">
-                <xs:unique name="unikalusSaskaituIBAN">
-                    <xs:selector xpath="sa:saskaita" />
-                    <xs:field xpath="@iban" />
-                </xs:unique>
-            </xs:element>
+            <xs:element name="saskaitos" type="saskaitosT" />
             <xs:element name="korteles" type="kortelesT">
-                <xs:unique name="unikalusKorteliuNumeriai">
+                <xs:key name="unikalusKorteliuNumeriai">
                     <xs:selector xpath="ko:kortele" />
                     <xs:field xpath="@numeris" />
-                </xs:unique>
+                </xs:key>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
 
-    <xs:element name="bankas" type="bankasT" />
+    <xs:element name="bankas" type="bankasT">
+        <xs:key name="saskaitosIBAN">
+            <xs:selector xpath="ba:saskaitos/sa:saskaita" />
+            <xs:field xpath="@iban" />
+        </xs:key>
+        <xs:keyref name="nuorodaISaskaitaIsKliento" refer="saskaitosIBAN">
+            <xs:selector xpath="ba:klientai/kl:saskaitos/kl:saskaita" />
+            <xs:field xpath="@iban" />
+        </xs:keyref>
+        <xs:keyref name="nuorodaISaskaitaIsKorteles" refer="saskaitosIBAN">
+            <xs:selector xpath="ba:korteles/ko:kortele/ko:saskaita" />
+            <xs:field xpath="@iban" />
+        </xs:keyref>
+    </xs:element>
 
 </xs:schema>
+
+<!-- 
+    1. Paprastas tipas, apribojantis kokį nors Schema standartinį tipą,
+    2. Prasmingas sąrašo tipas (list type). Neprasmingo sąrašo tipo pavyzdys: sąrašas iš string tipo elementų. Neprasmingas todėl, kad jį galima pakeisti vienu paprastu tipu: string.
+    3. Sudėtingi tipai su paprastu turiniu,
+        1. išvesti apribojimu (restriction) iš jūsų (ne XML Schema) bazinio tipo
+        2. išvesti praplėtimu (extension) iš jūsų bazinio tipo
+    4. Sudėtingi tipai su sudėtingu turiniu,
+        1. išvesti apribojimu (restriction) iš jūsų bazinio tipo
+        2. išvesti praplėtimu (extension) iš jūsų bazinio tipo
+    5. Pademonstruoti apribojimo principą - parodyti pavyzdį, kai apribojimo principas pažeistas, ir žinoti, kaip reikia pataisyti pavyzdį,
+    6. Sudėtingas tipas su mišriu turiniu,
+    7. choice valdymo struktūra,
+    8. Bent viena nuoroda (keyref) į unikalumo ribojimą (unique) arba raktą (key)
+    9. Visi jūsų susikurti tipai turi priklausyti jūsų vardų sričiai
+
+    1. idT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT
+    2.
+    3.1.
+    3.2.
+    4.1.
+    4.2. pilnaSaskaitaT
+    5. idT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT, cvcT
+    6.
+    7.
+    8. nuorodaISaskaitaIsKliento, nuorodaISaskaitaIsKorteles
+-->
