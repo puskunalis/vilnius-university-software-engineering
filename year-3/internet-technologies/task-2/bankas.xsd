@@ -81,13 +81,13 @@
     8. Bent viena nuoroda (keyref) į unikalumo ribojimą (unique) arba raktą (key)
     9. Visi jūsų susikurti tipai turi priklausyti jūsų vardų sričiai
 
-    1. idT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT
-    2.
-    3.1.
-    3.2.
-    4.1.
+    1. ilgaSimboliuEiluteT, idT, telefonoNumerisT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT
+    2. telefonoNumeriaiT
+    3.1. trumpaZinuteT
+    3.2. zinuteT
+    4.1. ribotosSaskaitosT
     4.2. pilnaSaskaitaT, pavedimasT
-    5. idT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT, cvcT
+    5. ilgaSimboliuEiluteT, idT, telefonoNumerisT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT, cvcT
     6. kl:zinute
     7. sa:israsas
     8. nuorodaISaskaitaIsKliento, nuorodaISaskaitaIsKorteles

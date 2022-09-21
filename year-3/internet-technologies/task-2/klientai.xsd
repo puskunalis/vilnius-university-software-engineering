@@ -14,29 +14,79 @@
         </xs:sequence>
     </xs:complexType>
 
-    <xs:complexType name="zinuteT" mixed="true">
+    <xs:complexType name="ribotosSaskaitosT">
+        <xs:complexContent>
+            <xs:restriction base="saskaitosT">
+                <xs:sequence>
+                    <xs:element name="saskaita" type="saskaitaT" minOccurs="0" maxOccurs="2" />
+                </xs:sequence>
+            </xs:restriction>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="zinuteT">
+        <xs:simpleContent>
+            <xs:extension base="ilgaSimboliuEiluteT">
+                <xs:attribute name="kalba" type="xs:language" />
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="trumpaZinuteT">
+        <xs:simpleContent>
+            <xs:restriction base="zinuteT">
+                <xs:maxLength value="16" />
+            </xs:restriction>
+        </xs:simpleContent>
+    </xs:complexType>
+
+    <xs:complexType name="formatuotaZinuteT" mixed="true">
         <xs:sequence>
             <xs:element name="paryskinimas" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
+        <xs:attribute name="kalba" type="xs:language" />
     </xs:complexType>
 
     <xs:complexType name="zinutesT">
         <xs:sequence>
-            <xs:element name="zinute" type="zinuteT" minOccurs="0" maxOccurs="unbounded" />
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="zinute" type="zinuteT" />
+                <xs:element name="trumpa-zinute" type="trumpaZinuteT" />
+                <xs:element name="formatuota-zinute" type="formatuotaZinuteT" />
+            </xs:choice>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="telefonoNumeriaiT">
+        <xs:list itemType="kl:telefonoNumerisT" />
+    </xs:simpleType>
+
+    <xs:complexType name="asmensDuomenysT">
+        <xs:sequence>
+            <xs:element name="vardas" type="xs:string" />
+            <xs:element name="pavarde" type="xs:string" />
+            <xs:element name="gimimo-data" type="xs:date" />
+            <xs:element name="telefono-numeriai" type="telefonoNumeriaiT" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="klientasT">
         <xs:sequence>
-            <xs:element name="vardas" type="xs:string" />
-            <xs:element name="pavarde" type="xs:string" />
-            <xs:element name="gimimo-data" type="xs:date" />
-            <xs:element name="saskaitos" type="saskaitosT">
-                <xs:unique name="unikalusSaskaituIBAN">
-                    <xs:selector xpath="kl:saskaita" />
-                    <xs:field xpath="@iban" />
-                </xs:unique>
-            </xs:element>
+            <xs:element name="asmens-duomenys" type="asmensDuomenysT" />
+            <xs:choice>
+                <xs:element name="saskaitos" type="saskaitosT">
+                    <xs:unique name="unikalusSaskaituIBAN">
+                        <xs:selector xpath="kl:saskaita" />
+                        <xs:field xpath="@iban" />
+                    </xs:unique>
+                </xs:element>
+                <xs:element name="ribotos-saskaitos" type="ribotosSaskaitosT">
+                    <xs:unique name="unikalusRibotuSaskaituIBAN">
+                        <xs:selector xpath="kl:saskaita" />
+                        <xs:field xpath="@iban" />
+                    </xs:unique>
+                </xs:element>
+            </xs:choice>
             <xs:element name="zinutes" type="zinutesT" />
         </xs:sequence>
         <xs:attribute name="id" type="idT" use="required" />

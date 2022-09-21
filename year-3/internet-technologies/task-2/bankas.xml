@@ -7,26 +7,36 @@
     <klientai xmlns:kl="http://puskunalis.lt/bankas/xml/klientai"
               xsi:schemaLocation="http://puskunalis.lt/bankas/xml/klientai klientai.xsd">
         <kl:klientas id="9876">
-            <kl:vardas>Vardenis</kl:vardas>
-            <kl:pavarde>Pavardenis</kl:pavarde>
-            <kl:gimimo-data>2000-01-01</kl:gimimo-data>
+            <kl:asmens-duomenys>
+                <kl:vardas>Vardenis</kl:vardas>
+                <kl:pavarde>Pavardenis</kl:pavarde>
+                <kl:gimimo-data>2000-01-01</kl:gimimo-data>
+                <kl:telefono-numeriai>+37061234567 +37069876543</kl:telefono-numeriai>
+            </kl:asmens-duomenys>
             <kl:saskaitos>
                 <kl:saskaita iban="LT121000011101001000" />
             </kl:saskaitos>
             <kl:zinutes>
-                <kl:zinute>
-                    Ačiū Jums <kl:paryskinimas>labai</kl:paryskinimas>, kad esate <kl:paryskinimas>mūsų</kl:paryskinimas> banko klientas.
+                <kl:zinute kalba="en">
+                    We are happy to welcome you to our bank!
                 </kl:zinute>
+                <kl:trumpa-zinute kalba="lt">Sveiki, Vardeni!</kl:trumpa-zinute>
+                <kl:formatuota-zinute kalba="lt">
+                    Ačiū Jums <kl:paryskinimas>labai</kl:paryskinimas>, kad esate <kl:paryskinimas>mūsų</kl:paryskinimas> banko klientas.
+                </kl:formatuota-zinute>
             </kl:zinutes>
         </kl:klientas>
         <kl:klientas id="5678">
-            <kl:vardas>Vardauskas</kl:vardas>
-            <kl:pavarde>Pavardauskas</kl:pavarde>
-            <kl:gimimo-data>1990-01-01</kl:gimimo-data>
-            <kl:saskaitos>
+            <kl:asmens-duomenys>
+                <kl:vardas>Vardauskas</kl:vardas>
+                <kl:pavarde>Pavardauskas</kl:pavarde>
+                <kl:gimimo-data>1990-01-01</kl:gimimo-data>
+                <kl:telefono-numeriai>+37061111111</kl:telefono-numeriai>
+            </kl:asmens-duomenys>
+            <kl:ribotos-saskaitos>
                 <kl:saskaita iban="LT121000011101001001" />
                 <kl:saskaita iban="LT121000011101001002" />
-            </kl:saskaitos>
+            </kl:ribotos-saskaitos>
             <kl:zinutes></kl:zinutes>
         </kl:klientas>
     </klientai>

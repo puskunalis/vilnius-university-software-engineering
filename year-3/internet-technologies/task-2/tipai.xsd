@@ -2,9 +2,21 @@
 
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+    <xs:simpleType name="ilgaSimboliuEiluteT">
+        <xs:restriction base="xs:string">
+            <xs:maxLength value="1024" />
+        </xs:restriction>
+    </xs:simpleType>
+
     <xs:simpleType name="idT">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0"/>
+            <xs:minInclusive value="0" />
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="telefonoNumerisT">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\+3706\d{7}" />
         </xs:restriction>
     </xs:simpleType>
 
