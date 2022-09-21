@@ -3,6 +3,7 @@
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
            targetNamespace="http://puskunalis.lt/bankas/xml/klientai"
            xmlns="http://puskunalis.lt/bankas/xml/klientai"
+           xmlns:kl="http://puskunalis.lt/bankas/xml/klientai"
            elementFormDefault="qualified">
     
     <xs:include schemaLocation="tipai.xsd" />
@@ -18,7 +19,12 @@
             <xs:element name="vardas" type="xs:string" />
             <xs:element name="pavarde" type="xs:string" />
             <xs:element name="gimimo-data" type="xs:date" />
-            <xs:element name="saskaitos" type="saskaitosT" />
+            <xs:element name="saskaitos" type="saskaitosT">
+                <xs:unique name="unikalusSaskaituIBAN">
+                    <xs:selector xpath="kl:saskaita" />
+                    <xs:field xpath="@iban" />
+                </xs:unique>
+            </xs:element>
         </xs:sequence>
         <xs:attribute name="id" type="idT" use="required" />
     </xs:complexType>
