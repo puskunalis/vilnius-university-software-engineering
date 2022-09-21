@@ -14,6 +14,18 @@
         </xs:sequence>
     </xs:complexType>
 
+    <xs:complexType name="zinuteT" mixed="true">
+        <xs:sequence>
+            <xs:element name="paryskinimas" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:complexType name="zinutesT">
+        <xs:sequence>
+            <xs:element name="zinute" type="zinuteT" minOccurs="0" maxOccurs="unbounded" />
+        </xs:sequence>
+    </xs:complexType>
+
     <xs:complexType name="klientasT">
         <xs:sequence>
             <xs:element name="vardas" type="xs:string" />
@@ -25,6 +37,7 @@
                     <xs:field xpath="@iban" />
                 </xs:unique>
             </xs:element>
+            <xs:element name="zinutes" type="zinutesT" />
         </xs:sequence>
         <xs:attribute name="id" type="idT" use="required" />
     </xs:complexType>

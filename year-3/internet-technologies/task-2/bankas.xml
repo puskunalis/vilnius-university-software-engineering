@@ -13,6 +13,11 @@
             <kl:saskaitos>
                 <kl:saskaita iban="LT121000011101001000" />
             </kl:saskaitos>
+            <kl:zinutes>
+                <kl:zinute>
+                    Ačiū Jums <kl:paryskinimas>labai</kl:paryskinimas>, <kl:paryskinimas>a</kl:paryskinimas>kad esate mūsų banko klientas.
+                </kl:zinute>
+            </kl:zinutes>
         </kl:klientas>
         <kl:klientas id="5678">
             <kl:vardas>Vardauskas</kl:vardas>
@@ -22,6 +27,7 @@
                 <kl:saskaita iban="LT121000011101001001" />
                 <kl:saskaita iban="LT121000011101001002" />
             </kl:saskaitos>
+            <kl:zinutes></kl:zinutes>
         </kl:klientas>
     </klientai>
 
