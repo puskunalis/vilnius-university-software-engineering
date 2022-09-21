@@ -13,7 +13,7 @@
             <xs:element name="galiojimo-data" type="xs:date" />
             <xs:element name="cvc" type="cvcT" />
         </xs:sequence>
-        <xs:attribute name="numeris" type="kortelesNumerisT" />
+        <xs:attribute name="numeris" type="kortelesNumerisT" use="required" />
     </xs:complexType>
 
     <xs:element name="kortele" type="korteleT" />

@@ -20,7 +20,7 @@
             <xs:element name="gimimo-data" type="xs:date" />
             <xs:element name="saskaitos" type="saskaitosT" />
         </xs:sequence>
-        <xs:attribute name="id" type="idT" />
+        <xs:attribute name="id" type="idT" use="required" />
     </xs:complexType>
 
     <xs:element name="klientas" type="klientasT" />

@@ -12,7 +12,7 @@
             <xs:element name="data" type="xs:date" />
             <xs:element name="suma" type="sumaT" />
         </xs:sequence>
-        <xs:attribute name="tipas" type="pavedimoTipasT" />
+        <xs:attribute name="tipas" type="pavedimoTipasT" use="required" />
     </xs:complexType>
 
     <xs:complexType name="israsasT">

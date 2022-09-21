@@ -40,7 +40,7 @@
     </xs:simpleType>
 
     <xs:complexType name="saskaitaT">
-        <xs:attribute name="iban" type="ibanT" />
+        <xs:attribute name="iban" type="ibanT" use="required" />
     </xs:complexType>
 
 </xs:schema>
