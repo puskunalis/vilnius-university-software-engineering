@@ -14,19 +14,19 @@
 
     <xs:complexType name="klientaiT">
         <xs:sequence>
-            <xs:element ref="kl:klientas" maxOccurs="unbounded" />
+            <xs:element ref="kl:klientas" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="saskaitosT">
         <xs:sequence>
-            <xs:element ref="sa:saskaita" maxOccurs="unbounded" />
+            <xs:element ref="sa:saskaita" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 
     <xs:complexType name="kortelesT">
         <xs:sequence>
-            <xs:element ref="ko:kortele" maxOccurs="unbounded" />
+            <xs:element ref="ko:kortele" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 

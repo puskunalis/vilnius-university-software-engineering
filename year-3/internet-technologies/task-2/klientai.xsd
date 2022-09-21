@@ -9,7 +9,7 @@
 
     <xs:complexType name="saskaitosT">
         <xs:sequence>
-            <xs:element name="saskaita" type="saskaitaT" maxOccurs="unbounded" />
+            <xs:element name="saskaita" type="saskaitaT" minOccurs="0" maxOccurs="unbounded" />
         </xs:sequence>
     </xs:complexType>
 

@@ -9,7 +9,7 @@
 
     <xs:complexType name="korteleT">
         <xs:sequence>
-            <xs:element name="saskaita" type="saskaitaT" maxOccurs="unbounded" />
+            <xs:element name="saskaita" type="saskaitaT" />
             <xs:element name="galiojimo-data" type="xs:date" />
             <xs:element name="cvc" type="cvcT" />
         </xs:sequence>
