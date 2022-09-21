@@ -19,6 +19,7 @@ class DemoWebShopTest(unittest.TestCase):
 
     def setUp(self):
         self.driver = webdriver.Firefox()
+        self.driver.implicitly_wait(10)
 
     def test_demo_web_shop(self):
         driver = self.driver
