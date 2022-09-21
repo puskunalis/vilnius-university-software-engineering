@@ -59,6 +59,14 @@
                     <sa:data>1999-03-03</sa:data>
                     <sa:suma>1.00</sa:suma>
                 </sa:pavedimas>
+                <sa:pavedimas tipas="debetas">
+                    <sa:data>1999-03-04</sa:data>
+                    <sa:suma>1.00</sa:suma>
+                </sa:pavedimas>
+                <sa:inesimas>
+                    <sa:data>1999-03-05</sa:data>
+                    <sa:suma>1.00</sa:suma>
+                </sa:inesimas>
             </sa:israsas>
             <sa:sukurimo-data>1998-01-01</sa:sukurimo-data>
         </sa:saskaita>

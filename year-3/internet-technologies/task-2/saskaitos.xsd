@@ -6,18 +6,28 @@
            elementFormDefault="qualified">
     
     <xs:include schemaLocation="tipai.xsd" />
-    
-    <xs:complexType name="pavedimasT">
+
+    <xs:complexType name="inesimasT">
         <xs:sequence>
             <xs:element name="data" type="xs:date" />
             <xs:element name="suma" type="sumaT" />
         </xs:sequence>
-        <xs:attribute name="tipas" type="pavedimoTipasT" use="required" />
+    </xs:complexType>
+
+    <xs:complexType name="pavedimasT">
+        <xs:complexContent>
+            <xs:extension base="inesimasT">
+                <xs:attribute name="tipas" type="pavedimoTipasT"/>
+            </xs:extension>
+        </xs:complexContent>
     </xs:complexType>
 
     <xs:complexType name="israsasT">
         <xs:sequence>
-            <xs:element name="pavedimas" type="pavedimasT" minOccurs="0" maxOccurs="unbounded" />
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="pavedimas" type="pavedimasT" />
+                <xs:element name="inesimas" type="inesimasT" />
+            </xs:choice>
         </xs:sequence>
     </xs:complexType>
 
