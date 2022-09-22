@@ -55,7 +55,7 @@
             <xs:field xpath="@iban" />
         </xs:key>
         <xs:keyref name="nuorodaISaskaitaIsKliento" refer="saskaitosIBAN">
-            <xs:selector xpath="ba:klientai/kl:saskaitos/kl:saskaita" />
+            <xs:selector xpath="ba:klientai/kl:saskaitos/kl:saskaita | ba:klientai/kl:ribotos-saskaitos/kl:saskaita" />
             <xs:field xpath="@iban" />
         </xs:keyref>
         <xs:keyref name="nuorodaISaskaitaIsKorteles" refer="saskaitosIBAN">
@@ -88,7 +88,7 @@
     4.1. ribotosSaskaitosT
     4.2. pilnaSaskaitaT, pavedimasT
     5. ilgaSimboliuEiluteT, idT, telefonoNumerisT, ibanT, sumaT, pavedimoTipasT, kortelesNumerisT, cvcT
-    6. kl:zinute
+    6. Žinutės, sąskaitos, išrašas
     7. sa:israsas
     8. nuorodaISaskaitaIsKliento, nuorodaISaskaitaIsKorteles
 -->
