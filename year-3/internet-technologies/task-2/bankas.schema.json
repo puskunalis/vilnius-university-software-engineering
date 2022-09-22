@@ -29,6 +29,40 @@
                 "$ref": "#/definitions/saskaita"
             }
         },
+        "zinute": {
+            "type": "object",
+            "required": ["tipas", "turinys"],
+            "properties": {
+                "tipas": {
+                    "enum": ["zinute", "formatuotaZinute"]
+                },
+                "kalba": {
+                    "type": "string",
+                    "pattern": "^[a-z]{2}$"
+                },
+                "turinys": {
+                    "type": "string",
+                    "maxLength": 1024
+                }
+            }
+        },
+        "trumpaZinute": {
+            "type": "object",
+            "required": ["tipas", "turinys"],
+            "properties": {
+                "tipas": {
+                    "const": "trumpaZinute"
+                },
+                "kalba": {
+                    "type": "string",
+                    "pattern": "^[a-z]{2}$"
+                },
+                "turinys": {
+                    "type": "string",
+                    "maxLength": 16
+                }
+            }
+        },
         "data": {
             "type": "string",
             "pattern": "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$"
@@ -93,19 +127,17 @@
                                 "type": "array",
                                 "items": {
                                     "type": "object",
-                                    "required": ["tipas", "turinys"],
-                                    "properties": {
-                                        "tipas": {
-                                            "enum": ["zinute", "trumpaZinute", "formatuotaZinute"]
+                                    "anyOf": [
+                                        {
+                                            "$ref": "#/definitions/zinute"
                                         },
-                                        "kalba": {
-                                            "type": "string",
-                                            "pattern": "^[a-z]{2}$"
+                                        {
+                                            "$ref": "#/definitions/trumpaZinute"
                                         },
-                                        "turinys": {
-                                            "type": "string"
+                                        {
+                                            "$ref": "#/definitions/formatuotaZinute"
                                         }
-                                    }
+                                    ]
                                 }
                             }
                         }
