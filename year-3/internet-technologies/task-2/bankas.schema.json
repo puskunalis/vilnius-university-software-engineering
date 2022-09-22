@@ -133,9 +133,6 @@
                                         },
                                         {
                                             "$ref": "#/definitions/trumpaZinute"
-                                        },
-                                        {
-                                            "$ref": "#/definitions/formatuotaZinute"
                                         }
                                     ]
                                 }
