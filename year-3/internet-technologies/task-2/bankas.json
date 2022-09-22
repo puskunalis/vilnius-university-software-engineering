@@ -3,28 +3,51 @@
         "klientai": [
             {
                 "id": 9876,
-                "vardas": "Vardenis",
-                "pavarde": "Pavardenis",
-                "gimimoData": "2000-01-01",
+                "asmensDuomenys": {
+                    "vardas": "Vardenis",
+                    "pavarde": "Pavardenis",
+                    "gimimoData": "2000-01-01",
+                    "telefonoNumeriai": ["+37061234567", "+37069876543"]
+                },
                 "saskaitos": [
                     {
                         "iban": "LT121000011101001000"
+                    }
+                ],
+                "zinutes": [
+                    {
+                        "tipas": "zinute",
+                        "kalba": "en",
+                        "turinys": "We are happy to welcome you to our bank!"
+                    },
+                    {
+                        "tipas": "trumpaZinute",
+                        "kalba": "lt",
+                        "turinys": "Sveiki, Vardeni!"
+                    },
+                    {
+                        "tipas": "formatuotaZinute",
+                        "turinys": "Ačiū Jums *labai*, kad esate *mūsų* banko klientas."
                     }
                 ]
             },
             {
                 "id": 5678,
-                "vardas": "Vardauskas",
-                "pavarde": "Pavardauskas",
-                "gimimoData": "1990-01-01",
-                "saskaitos": [
+                "asmensDuomenys": {
+                    "vardas": "Vardauskas",
+                    "pavarde": "Pavardauskas",
+                    "gimimoData": "1990-01-01",
+                    "telefonoNumeriai": ["+37061111111"]
+                },
+                "ribotosSaskaitos": [
                     {
                         "iban": "LT121000011101001001"
                     },
                     {
                         "iban": "LT121000011101001002"
                     }
-                ]
+                ],
+                "zinutes": []
             }
         ],
         "saskaitos": [
@@ -58,6 +81,16 @@
                     {
                         "tipas": "kreditas",
                         "data": "1999-03-03",
+                        "suma": 1.00
+                    },
+                    {
+                        "tipas": "debetas",
+                        "data": "1999-03-04",
+                        "suma": 1.00
+                    },
+                    {
+                        "tipas": "inesimas",
+                        "data": "1999-03-05",
                         "suma": 1.00
                     }
                 ],
