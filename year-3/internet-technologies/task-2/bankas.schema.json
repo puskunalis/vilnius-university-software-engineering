@@ -1,0 +1,179 @@
+{
+    "$id": "http://puskunalis.lt/bankas/bankas.json",
+    "$schema": "http://json-schema.org/draft-06/schema",
+    "type": "object",
+    "required": ["bankas"],
+    "definitions": {
+        "saskaita": {
+            "type": "object",
+            "required": ["iban"],
+            "properties": {
+                "iban": {
+                    "type": "string",
+                    "pattern": "^LT\\d{18}$"
+                }
+            }
+        },
+        "saskaitos": {
+            "type": "array",
+            "uniqueItems": true,
+            "items": {
+                "$ref": "#/definitions/saskaita"
+            }
+        },
+        "ribotosSaskaitos": {
+            "type": "array",
+            "uniqueItems": true,
+            "maxItems": 2,
+            "items": {
+                "$ref": "#/definitions/saskaita"
+            }
+        },
+        "data": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-(((0[13578]|(10|12))-(0[1-9]|[1-2][0-9]|3[0-1]))|(02-(0[1-9]|[1-2][0-9]))|((0[469]|11)-(0[1-9]|[1-2][0-9]|30)))$"
+        },
+        "teigiamasRealusSkaicius": {
+            "type": "number",
+            "minimum": 0
+        }
+    },
+    "properties": {
+        "bankas": {
+            "type": "object",
+            "required": ["klientai", "saskaitos", "korteles"],
+            "properties": {
+                "klientai": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "required": ["id", "asmensDuomenys", "zinutes"],
+                        "oneOf": [
+                            {
+                                "required": ["saskaitos"]
+                            },
+                            {
+                                "required": ["ribotosSaskaitos"]
+                            }
+                        ],
+                        "properties": {
+                            "id": {
+                                "type": "integer",
+                                "minimum": 0
+                            },
+                            "asmensDuomenys": {
+                                "type": "object",
+                                "required": ["vardas", "pavarde", "gimimoData", "telefonoNumeriai"],
+                                "properties": {
+                                    "vardas": {
+                                        "type": "string"
+                                    },
+                                    "pavarde": {
+                                        "type": "string"
+                                    },
+                                    "gimimoData": {
+                                        "$ref": "#/definitions/data"
+                                    },
+                                    "telefonoNumeriai": {
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "pattern": "^\\+3706\\d{7}$"
+                                        }
+                                    }
+                                }
+                            },
+                            "saskaitos": {
+                                "$ref": "#/definitions/saskaitos"
+                            },
+                            "ribotosSaskaitos": {
+                                "$ref": "#/definitions/ribotosSaskaitos"
+                            },
+                            "zinutes": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "required": ["tipas", "turinys"],
+                                    "properties": {
+                                        "tipas": {
+                                            "enum": ["zinute", "trumpaZinute", "formatuotaZinute"]
+                                        },
+                                        "kalba": {
+                                            "type": "string",
+                                            "pattern": "^[a-z]{2}$"
+                                        },
+                                        "turinys": {
+                                            "type": "string"
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "saskaitos": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/saskaita"
+                            }
+                        ],
+                        "required": ["iban", "likutis", "israsas", "sukurimoData"],
+                        "properties": {
+                            "likutis": {
+                                "$ref": "#/definitions/teigiamasRealusSkaicius"
+                            },
+                            "israsas": {
+                                "type": "array",
+                                "items": {
+                                    "type": "object",
+                                    "properties": {
+                                        "tipas": {
+                                            "enum": ["kreditas", "debetas", "inesimas"]
+                                        },
+                                        "data": {
+                                            "$ref": "#/definitions/data"
+                                        },
+                                        "suma": {
+                                            "$ref": "#/definitions/teigiamasRealusSkaicius"
+                                        }
+                                    }
+                                }
+                            },
+                            "sukurimoData": {
+                                "$ref": "#/definitions/data"
+                            }
+                        }
+                    }
+                },
+                "korteles": {
+                    "type": "array",
+                    "items": {
+                        "type": "object",
+                        "allOf": [
+                            {
+                                "$ref": "#/definitions/saskaita"
+                            }
+                        ],
+                        "required": ["numeris", "iban", "galiojimoData", "cvc"],
+                        "properties": {
+                            "numeris": {
+                                "type": "string",
+                                "pattern": "^\\d{16}$"
+                            },
+                            "galiojimoData": {
+                                "$ref": "#/definitions/data"
+                            },
+                            "cvc": {
+                                "type": "string",
+                                "pattern": "^\\d{3}$"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
