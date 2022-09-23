@@ -34,17 +34,17 @@
     <xs:complexType name="bankasT">
         <xs:sequence>
             <xs:element name="klientai" type="klientaiT">
-                <xs:key name="unikalusKlientuID">
+                <xs:unique name="unikalusKlientuID">
                     <xs:selector xpath="kl:klientas" />
                     <xs:field xpath="@id" />
-                </xs:key>
+                </xs:unique>
             </xs:element>
             <xs:element name="saskaitos" type="saskaitosT" />
             <xs:element name="korteles" type="kortelesT">
-                <xs:key name="unikalusKorteliuNumeriai">
+                <xs:unique name="unikalusKorteliuNumeriai">
                     <xs:selector xpath="ko:kortele" />
                     <xs:field xpath="@numeris" />
-                </xs:key>
+                </xs:unique>
             </xs:element>
         </xs:sequence>
     </xs:complexType>
