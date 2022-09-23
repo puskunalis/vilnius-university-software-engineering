@@ -3,6 +3,7 @@
     "$schema": "http://json-schema.org/draft-06/schema",
     "type": "object",
     "required": ["bankas"],
+    "additionalProperties": false,
     "definitions": {
         "saskaita": {
             "type": "object",
@@ -32,6 +33,7 @@
         "zinute": {
             "type": "object",
             "required": ["tipas", "turinys"],
+            "additionalProperties": false,
             "properties": {
                 "tipas": {
                     "enum": ["zinute", "formatuotaZinute"]
@@ -76,12 +78,14 @@
         "bankas": {
             "type": "object",
             "required": ["klientai", "saskaitos", "korteles"],
+            "additionalProperties": false,
             "properties": {
                 "klientai": {
                     "type": "array",
                     "items": {
                         "type": "object",
                         "required": ["id", "asmensDuomenys", "zinutes"],
+                        "additionalProperties": false,
                         "oneOf": [
                             {
                                 "required": ["saskaitos"]
@@ -98,6 +102,7 @@
                             "asmensDuomenys": {
                                 "type": "object",
                                 "required": ["vardas", "pavarde", "gimimoData", "telefonoNumeriai"],
+                                "additionalProperties": false,
                                 "properties": {
                                     "vardas": {
                                         "type": "string"
@@ -150,7 +155,11 @@
                             }
                         ],
                         "required": ["iban", "likutis", "israsas", "sukurimoData"],
+                        "additionalProperties": false,
                         "properties": {
+                            "iban": {
+                                "type": "string"
+                            },
                             "likutis": {
                                 "$ref": "#/definitions/teigiamasRealusSkaicius"
                             },
@@ -187,7 +196,11 @@
                             }
                         ],
                         "required": ["numeris", "iban", "galiojimoData", "cvc"],
+                        "additionalProperties": false,
                         "properties": {
+                            "iban": {
+                                "type": "string"
+                            },
                             "numeris": {
                                 "type": "string",
                                 "pattern": "^\\d{16}$"
