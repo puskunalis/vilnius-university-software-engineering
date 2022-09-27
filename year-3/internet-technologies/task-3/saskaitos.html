@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="lt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MIF Bankas</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+    <header>
+        <img id="logo" alt="Bank logo" src="svg/bank-logo.svg">
+
+        <section>
+            <h1>MIF Bankas</h1>
+            <h2>Administratoriaus sritis</h2>
+        </section>
+    </header>
+
+    <nav>
+        <ul>
+            <li><a href="index.html">Pradinis</a></li>
+            <li><a href="klientai.html">Klientai</a></li>
+            <li><a class="active" href="saskaitos.html">Sąskaitos</a></li>
+            <li><a href="korteles.html">Kortelės</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <header>
+            <h3>Sąskaitos</h3>
+        </header>
+
+        <table>
+            <tr>
+                <th colspan="6">Sąskaitų informacija</th>
+            </tr>
+            <tr>
+                <th rowspan="2">IBAN</th>
+                <th rowspan="2">Likutis</th>
+                <th rowspan="2">Sukūrimo data</th>
+                <th colspan="3">Pavedimai</th>
+            </tr>
+            <tr>
+                <th>Tipas</th>
+                <th>Data</th>
+                <th>Suma</th>
+            </tr>
+            <tr>
+                <td rowspan="2">LT121000011101001000</td>
+                <td rowspan="2">1234.56</td>
+                <td rowspan="2">2000-06-01</td>
+                <td>Kreditas</td>
+                <td>2001-01-01</td>
+                <td>2234.56</td>
+            </tr>
+            <tr>
+                <td>Debetas</td>
+                <td>2000-06-01</td>
+                <td>1000.00</td>
+            </tr>
+            <tr>
+                <td>LT121000011101001001</td>
+                <td>0.00</td>
+                <td>1997-01-01</td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <tr>
+                <td rowspan="3">LT121000011101001002</td>
+                <td rowspan="3">1.00</td>
+                <td rowspan="3">1998-01-01</td>
+                <td>Kreditas</td>
+                <td>1999-03-03</td>
+                <td>1.00</td>
+            </tr>
+            <tr>
+                <td>Debetas</td>
+                <td>1999-03-04</td>
+                <td>1.00</td>
+            </tr>
+            <tr>
+                <td>Įnešimas</td>
+                <td>1999-03-05</td>
+                <td>1.00</td>
+            </tr>
+        </table>
+
+    </section>
+
+    <footer>
+        MIF Bankas, 2022
+    </footer>
+
+</body>
+
+</html>

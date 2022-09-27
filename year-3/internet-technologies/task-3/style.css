@@ -1,0 +1,115 @@
+html {
+    font-family: sans-serif;
+}
+
+#logo {
+    width: 5em;
+    height: 5em;
+}
+
+section header {
+    display: block !important;
+}
+
+body header {
+    display: flex;
+    align-items: center;
+}
+
+h1, h2 {
+    margin: 0 0 0 10px;
+    display: flex;
+    align-items: center;
+}
+
+h1 {
+    font-size: 2em;
+}
+
+nav {
+    display: block;
+    margin: 1em auto 1em auto;
+    position: sticky;
+    top: 0;
+}
+
+nav > ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #303030;
+    border-radius: 1em;
+}
+
+nav > ul > li {
+    float: left;
+}
+
+nav a {
+    display: block;
+    color: whitesmoke;
+    text-align: center;
+    padding: 15px 20px;
+    text-decoration: none;
+    border-right: 1px solid white;
+}
+
+nav a:hover {
+    background-color: #101010;
+}
+
+.active {
+    background-color: #4CAF50;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+tr {
+    border-color: black;
+    border-width: 2px;
+    border-style: solid;
+    text-align: center;
+    padding: 5px;
+}
+
+th {
+    border-color: inherit;
+    border-width: 3px;
+    border-style: inherit;
+    padding: inherit;
+}
+
+td {
+    border-color: inherit;
+    border-width: inherit;
+    border-style: inherit;
+    padding: inherit;
+}
+
+label[for^="saskaitu-tipas-"] {
+    font-style: italic;
+}
+
+article p {
+    text-align: justify;
+}
+
+footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+@media screen and (max-width: 500px) {
+    nav {
+        position: static;
+    }
+
+    nav > ul > li {
+        float: none;
+    }
+}
