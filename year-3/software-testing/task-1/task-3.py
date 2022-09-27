@@ -1,9 +1,8 @@
+import time
 import unittest
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions
 
 class DemoQATest(unittest.TestCase):
 
@@ -23,12 +22,14 @@ class DemoQATest(unittest.TestCase):
         progress_bar.click()
 
         driver.find_element(By.ID, "startStopButton").click()
+        
+        self.assertIsNotNone(driver.find_element(By.XPATH, "//div[@aria-valuenow = '100']"))
 
-        WebDriverWait(driver, 20).until(expected_conditions.text_to_be_present_in_element((By.CLASS_NAME, "progress-bar"), "100%"))
+        time.sleep(1)
 
-        driver.find_element(By.ID, "resetButton").click()
+        driver.find_element(By.XPATH, "//*[@id = 'resetButton']").click()
 
-        WebDriverWait(driver, 20).until(expected_conditions.text_to_be_present_in_element((By.CLASS_NAME, "progress-bar"), "0%"))
+        self.assertIsNotNone(driver.find_element(By.XPATH, "//div[@aria-valuenow = '0']"))
 
     def test_web_tables(self):
         driver = self.driver
