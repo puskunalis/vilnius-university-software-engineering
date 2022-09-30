@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<duomenys>
+    
+    <darbuotojai>
+        <darbuotojas id="3">
+            <vardas>John</vardas>
+            <pavarde>Smith</pavarde>
+        </darbuotojas>
+        <darbuotojas id="5">
+            <vardas>Vardenis</vardas>
+            <pavarde>Pavardenis</pavarde>
+        </darbuotojas>
+    </darbuotojai>
+
+    <kasos>
+        <kasa id="1" darbuotojas="3" />
+    </kasos>
+
+</duomenys>
