@@ -1,0 +1,20 @@
+{
+    "klientai": [
+        {
+            "id": 9876,
+            "vardas": "Vardenis",
+            "pavarde": "Pavardenis",
+            "gimimoData": "2000-01-01",
+            "saskaituTipas": "neribotas",
+            "paskyrosTipas": "jaunimo"
+        },
+        {
+            "id": 5678,
+            "vardas": "Vardauskas",
+            "pavarde": "Pavardauskas",
+            "gimimoData": "1990-01-01",
+            "saskaituTipas": "ribotas",
+            "paskyrosTipas": "iprastas"
+        }
+    ]
+}
