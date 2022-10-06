@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>MIF Bankas</title>
     <link rel="stylesheet" href="style.css" type="text/css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="klientai.js"></script>
 </head>
 
 <body>
@@ -33,36 +35,17 @@
             <h3>Klientai</h3>
         </header>
 
-        <table>
+        <table id="klientu-informacija">
             <tr>
                 <th colspan="6">Klientų informacija</th>
             </tr>
             <tr>
-                <th rowspan="2">ID</th>
-                <th colspan="4">Asmens duomenys</th>
-                <th rowspan="2">Sąskaitos</th>
-            </tr>
-            <tr>
+                <th>ID</th>
                 <th>Vardas</th>
                 <th>Pavardė</th>
                 <th>Gimimo data</th>
-                <th>Telefono numeriai</th>
-            </tr>
-            <tr>
-                <td>9876</td>
-                <td>Vardenis</td>
-                <td>Pavardenis</td>
-                <td>2001-01-01</td>
-                <td>+37061234567 +37069876543</td>
-                <td>LT121000011101001000</td>
-            </tr>
-            <tr>
-                <td>5678</td>
-                <td>Vardauskas</td>
-                <td>Pavardauskas</td>
-                <td>1990-01-01</td>
-                <td>+37061111111</td>
-                <td>LT121000011101001001 LT121000011101001002</td>
+                <th>Sąskaitų tipas</th>
+                <th>Paskyros tipas</th>
             </tr>
         </table>
 
@@ -73,37 +56,31 @@
             <h3>Pridėti naują klientą</h3>
         </header>
 
-        <form name="naujas-klientas">
+        <form name="naujas-klientas" id="naujas-klientas" autocomplete="off">
             <p>
                 <label for="id">ID</label><br>
-                <input type="number" required name="id" id="id" min="0" max="999999999">
+                <input name="id" id="id">
+                <p id="id-validation-error" style="display: none;">ID privalo būti teigiamas sveikasis skaičius.
             </p>
             <p>
                 <label for="vardas">Vardas</label><br>
-                <input type="text" required name="vardas" id="vardas" pattern="^\p{L}+$" maxlength="128">
+                <input name="vardas" id="vardas">
+                <p id="vardas-validation-error" style="display: none;">Vardo laukas negali būti tuščias.
             </p>
             <p>
                 <label for="pavarde">Pavardė</label><br>
-                <input type="text" required name="pavarde" id="pavarde" pattern="^\p{L}+$" maxlength="128">
+                <input name="pavarde" id="pavarde">
             </p>
             <p>
                 <label for="gimimo-data">Gimimo data</label><br>
-                <input type="date" required name="gimimo-data" id="gimimo-data">
-            </p>
+                <input name="gimimoData" id="gimimo-data">
+                <p id="gimimo-data-validation-error" style="display: none;">Gimimo data privalo atitikti formatą 2000-01-31.</p>
             <p>
                 Vartotojo sąskaitų tipas<br>
-                <input type="radio" required name="saskaitu-tipas" id="saskaitu-tipas-1" value="neribotas">
+                <input type="radio" required name="saskaituTipas" id="saskaitu-tipas-1" value="neribotas">
                 <label for="saskaitu-tipas-1">Ribotas</label><br>
-                <input type="radio" required name="saskaitu-tipas" id="saskaitu-tipas-2" value="ribotas">
+                <input type="radio" required name="saskaituTipas" id="saskaitu-tipas-2" value="ribotas">
                 <label for="saskaitu-tipas-2">Neribotas</label>
-            </p>
-            <p>
-                <label for="paskyros-tipas">Vartotojo paskyros tipas</label><br>
-                <select name="paskyros-tipas" id="paskyros-tipas">
-                    <option value="iprastas">Įprastas</option>
-                    <option value="jaunimo">Jaunimo</option>
-                    <option value="verslo">Verslo</option>
-                </select>
             </p>
             <p>
                 <input type="submit" value="Pridėti">
