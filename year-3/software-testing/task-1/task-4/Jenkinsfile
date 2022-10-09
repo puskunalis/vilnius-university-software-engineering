@@ -1,11 +1,21 @@
 pipeline {
     agent any
     stages {
-        stage("Test stage") {
+        stage("Start Selenium Grid") {
             steps {
-                sh "ls -al"
-                sh "echo test"
-                sh "docker info"
+                sh "docker run -d -p 4444:4444 -p 7900:7900 --shm-size=\"2g\" selenium/standalone-firefox:latest"
+            }
+        }
+
+        stage("Build Python test image") {
+            steps {
+                sh "docker build -t task-4 year-3/software-testing/task-1/task-4"
+            }
+        }
+
+        stage("Run Python test container") {
+            steps {
+                sh "docker build -t task-4 year-3/software-testing/task-1/task-4"
             }
         }
     }
