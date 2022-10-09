@@ -39,7 +39,10 @@ class DemoWebShopTest(unittest.TestCase):
     password = ""
 
     def setUp(self):
-        self.driver = webdriver.Firefox()
+        self.driver = webdriver.Remote(
+            command_executor="http://localhost:4444/wd/hub",
+            options=webdriver.FirefoxOptions()
+        )
         self.driver.implicitly_wait(10)
 
     def run_test_with_item_list(self, item_list):
