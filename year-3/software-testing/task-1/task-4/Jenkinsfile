@@ -9,14 +9,13 @@ pipeline {
 
         stage("Build Python test image") {
             steps {
-                sh "ls -al year-3/software-testing/task-1/task-4"
                 sh "docker build -t task-4 year-3/software-testing/task-1/task-4"
             }
         }
 
         stage("Run Python test container") {
             steps {
-                sh "docker run task-4"
+                sh "docker run -p 4444:4444 task-4"
             }
         }
     }
