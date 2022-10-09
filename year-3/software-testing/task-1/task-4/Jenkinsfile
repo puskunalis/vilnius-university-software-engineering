@@ -15,7 +15,7 @@ pipeline {
 
         stage("Run Python test container") {
             steps {
-                sh "docker run -p 4444:4444 task-4"
+                sh "docker run --network=host task-4"
             }
         }
     }
